@@ -1,23 +1,17 @@
 public class Main {
-    int x=5;
-    void sum()
+    static int method1(int a)
     {
-        x=x+5;
-        System.out.println(x);
+        //System.out.println("Static Method");
+        return a;
+    }
+    int method2(int b)
+    {
+        //System.out.println("non-Static Method");
+        return b;
     }
     public static void main(String[] args) {
-       /* Main myobj= new Main();
-        System.out.println("Hello world!");
-        System.out.println(myobj.x);
-        myobj.sum();
-        myobj.display();
-        */
-
-        Student obj=new Student();
-        obj.name="ABC";
-        obj.age=28;
-        obj.cgpa=3.5F;
-        obj.display();
-
+        method1('5');
+        Main obj = new Main();
+        obj.method2(Integer.parseInt("10"));
     }
 }
