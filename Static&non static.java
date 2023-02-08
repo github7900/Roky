@@ -1,9 +1,9 @@
 public class Main {
-    static int method1(int a)
+    static void method1(int a)
     {
         System.out.println("Static Method");
     }
-    int method2(int b)
+    void method2(int b)
     {
         System.out.println("non-Static Method");
     }
