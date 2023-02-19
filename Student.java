@@ -1,18 +1,24 @@
 public class Student {
-    String Name;
-    int Age;
-    float CGPA;
-
-    void display() {
-        System.out.println(Name);
-        System.out.println(Age);
-        System.out.println(CGPA);
+    private String name;
+    public Student(){
+        this.name= "Unknown";
     }
-    public static void main( String[] args){
-        Student obj = new Student();
-        obj.Name = "Roky";
-        obj.Age = 21;
-        obj.CGPA =3.25f;
-        obj.display();
+    public Student(String name){
+        this.name= name;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+    public static void main(String[]args){
+        Student[]students=
+                { new Student("Roky"),
+                new Student("Bony"),
+                new Student(),
+                new Student("Emon"),
+                new Student()};
+        for (Student student : students){
+            System.out.println(student.getName());
+        }
     }
 }
