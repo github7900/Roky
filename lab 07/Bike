@@ -1,0 +1,6 @@
+public class Bike {
+    public int speed;
+    public void run(){
+        System.out.println("This Bike is running at: "+this.speed);
+    }
+}
