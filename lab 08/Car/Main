@@ -1,0 +1,14 @@
+public class Main {
+    public static void main(String[] args) {
+        Engine eng = new Engine(54.7);
+        DashBord db= new DashBord(7.0);
+        Volvo v=new Volvo(950,"2023", "RAJ34567",eng,db);
+        v.drive();
+        v.stop();
+        v.changeFuel();
+        v.checkBattery();
+        v.model="SUV. XC50";
+        v.company="Volvo";
+
+    }
+}
