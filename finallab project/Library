@@ -1,0 +1,201 @@
+
+
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+
+class Book {
+    private int id;
+    private String title;
+    private String author;
+    private boolean isAvailable;
+
+    public Book(int id, String title, String author) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.isAvailable = true;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
+    }
+}
+
+class Library {
+    private List<Book> books;
+
+    public Library() {
+        this.books = new ArrayList<>();
+    }
+
+    public void addBook(Book book) {
+        books.add(book);
+    }
+
+    public void removeBook(int id) {
+        for (Book book : books) {
+            if (book.getId() == id) {
+                books.remove(book);
+                break;
+            }
+        }
+    }
+
+    public void displayAvailableBooks() {
+        for (Book book : books) {
+            if (book.isAvailable()) {
+                System.out.println(book.getId() + ": " + book.getTitle() + " by " + book.getAuthor());
+            }
+        }
+    }
+
+    public void lendBook(int id) {
+        for (Book book : books) {
+            if (book.getId() == id && book.isAvailable()) {
+                book.setAvailable(false);
+                System.out.println("Book " + book.getTitle() + " has been lent.");
+                return;
+            }
+        }
+        System.out.println("Book with ID " + id + " is not available.");
+    }
+
+    public void returnBook(int id) {
+        for (Book book : books) {
+            if (book.getId() == id && !book.isAvailable()) {
+                book.setAvailable(true);
+                System.out.println("Book " + book.getTitle() + " has been returned.");
+                return;
+            }
+        }
+        System.out.println("Book with ID " + id + " cannot be returned.");
+    }
+}
+
+
+class LibraryManagementSystem {
+    private static Map<String, String> accounts = new HashMap<>();
+
+    public static void main(String[] args) {
+        Library library = new Library();
+        Scanner scanner = new Scanner(System.in);
+
+        // Add some books to the library
+        library.addBook(new Book(1, "To Kill a Mockingbird", "Harper Lee"));
+        library.addBook(new Book(2, "1984", "George Orwell"));
+        library.addBook(new Book(3, "Animal Farm", "George Orwell"));
+        library.addBook(new Book(4, "Brave New World", "Aldous Hux"));
+
+
+        while (true) {
+            System.out.println("\nWelcome to the library management system!");
+            System.out.println("Please choose an option:");
+            System.out.println("1. Create an account");
+            System.out.println("2. Log in");
+            System.out.println("3. Exit");
+            int choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    createAccount(scanner);
+                    break;
+                case 2:
+                    if (login(scanner)) {
+                        manageLibrary(library, scanner);
+                    }
+                    break;
+                case 3:
+                    System.out.println("Goodbye!");
+                    scanner.close();
+                    return;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+
+    private static void createAccount(Scanner scanner) {
+        System.out.println("Please enter your desired username:");
+        String username = scanner.next();
+        if (accounts.containsKey(username)) {
+            System.out.println("Username already exists. Please try again.");
+            return;
+        }
+        System.out.println("Please enter your password:");
+        String password = scanner.next();
+        accounts.put(username, password);
+        System.out.println("Account created successfully.");
+    }
+
+    private static boolean login(Scanner scanner) {
+        System.out.println("Please enter your username:");
+        String username = scanner.next();
+        if (!accounts.containsKey(username)) {
+            System.out.println("Invalid username. Please try again.");
+            return false;
+        }
+        System.out.println("Please enter your password:");
+        String password = scanner.next();
+        if (!password.equals(accounts.get(username))) {
+            System.out.println("Invalid password. Please try again.");
+            return false;
+        }
+        System.out.println("Logged in successfully.");
+        return true;
+    }
+
+    private static void manageLibrary(Library library, Scanner scanner) {
+        while (true) {
+            System.out.println("\nPlease choose an option:");
+            System.out.println("1. Display available books");
+            System.out.println("2. Lend a book");
+            System.out.println("3. Return a book");
+            System.out.println("4. Log out");
+            int choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    library.displayAvailableBooks();
+                    break;
+                case 2:
+                    System.out.println("Enter the ID of the book you want to lend:");
+                    int lendId = scanner.nextInt();
+                    library.lendBook(lendId);
+                    break;
+                case 3:
+                    System.out.println("Enter the ID of the book you want to return:");
+                    int returnId = scanner.nextInt();
+                    library.returnBook(returnId);
+                    break;
+                case 4:
+                    System.out.println("Logged out.");
+                    return;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+}
+
+
+
